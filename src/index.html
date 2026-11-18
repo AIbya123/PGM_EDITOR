@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<title>Nav2 地图精修</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232dd4bf'/%3E%3Cpath d='M8 11h6v5H8zm10 0h6v5h-6zM8 19h6v5H8zm10 0h6v5h-6z' fill='%2305201d'/%3E%3C/svg%3E">
+<style>
+<!-- INLINE_CSS -->
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5 12 3l9 3.5-9 3.5z"/><path d="M3 12l9 3.5 9-3.5M3 17.5 12 21l9-3.5"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/></symbol>
+    <symbol id="i-saveas" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H5v18h7"/><path d="M8 3v6h6V3"/><path d="M19 14v7M15.5 17.5h7"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m9 14-5-5 5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></symbol>
+    <symbol id="i-redo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m15 14 5-5-5-5"/><path d="M20 9H10a6 6 0 0 0 0 12h3"/></symbol>
+    <symbol id="i-fit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+    <symbol id="i-panel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 1 1 3.7 2.3c-.8.5-1.3 1-1.3 2"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V5.5a1.5 1.5 0 0 1 3 0V11m0-6.5a1.5 1.5 0 0 1 3 0V11m0-5a1.5 1.5 0 0 1 3 0v6m0-3.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-2.2a6 6 0 0 1-4.6-2.2L5 16.4a1.6 1.6 0 0 1 2.4-2.1L8 15"/></symbol>
+    <symbol id="i-brush" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 5.5 18.5 9.5 10 18H6v-4z"/><path d="M13 7 17 11"/><path d="M6 14c-2 0-3 1.5-3 3.5 0 1.2-.5 2-1.5 2.5 1.5 1 3 1 4.5 0 1.2-.8 2-2 2-3.5z"/></symbol>
+    <symbol id="i-eraser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m4 15 8-9a2 2 0 0 1 3-.2l4 4a2 2 0 0 1-.1 2.8L13 19H8z"/><path d="M4 15l4 4M10 19h10"/></symbol>
+    <symbol id="i-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 19 5"/><circle cx="5" cy="19" r="1.6" fill="currentColor" stroke="none"/><circle cx="19" cy="5" r="1.6" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-square" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="1.5"/></symbol>
+    <symbol id="i-polygon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 7.5 5.5-2.9 9H7.4l-2.9-9z"/><circle cx="12" cy="3" r="1.2" fill="currentColor" stroke="none"/><circle cx="19.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="7.4" cy="17.5" r="1.2" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-bucket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m5 11 7-7 7 7-7 7z"/><path d="M5 11h14M9 21c0-1.7 1-3 2-3s2 1.3 2 3a2 2 0 0 1-4 0z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m4 18 5-5 4 4 3-3 4 4"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></symbol>
+    <symbol id="i-wand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m4 20 11-11"/><path d="m14 4 .8 2.2L17 7l-2.2.8L14 10l-.8-2.2L11 7l2.2-.8z"/><path d="m19 11 .5 1.5L21 13l-1.5.5L19 15l-.5-1.5L17 13l1.5-.5z"/><path d="M6 4.5 6.5 6 8 6.5 6.5 7 6 8.5 5.5 7 4 6.5 5.5 6z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 6v6c0 4.5-3.2 7.7-8 9-4.8-1.3-8-4.5-8-9V6z"/><path d="M8.5 12h7"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 22 20H2z"/><path d="M12 9v5M12 17h.01"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12.5 5 5L20 6.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 6.3"/><path d="M20 5v6h-6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M5 19h14"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/><path d="M10 11v5M14 11v5"/></symbol>
+  </defs>
+</svg>
+
+<div id="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo"><svg><use href="#i-logo"/></svg></div>
+      <div class="brand-text">
+        <b>Nav2 地图精修</b>
+        <span id="fileTitle">未打开地图</span>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="actions">
+      <button class="btn" id="btnOpen" title="打开 .pgm / .yaml (Ctrl+O)">
+        <svg><use href="#i-folder"/></svg><span class="lbl">打开</span>
+      </button>
+      <button class="btn primary" id="btnSave" title="保存 (Ctrl+S)">
+        <svg><use href="#i-save"/></svg><span class="lbl">保存</span>
+      </button>
+      <button class="btn hide-sm" id="btnSaveAs" title="导出 (Ctrl+Shift+S)">
+        <svg><use href="#i-saveas"/></svg><span class="lbl">导出</span>
+      </button>
+      <div class="divider-v"></div>
+      <button class="icon-btn" id="btnUndo" title="撤销 (Ctrl+Z)" disabled><svg><use href="#i-undo"/></svg></button>
+      <button class="icon-btn" id="btnRedo" title="重做 (Ctrl+Shift+Z)" disabled><svg><use href="#i-redo"/></svg></button>
+      <div class="divider-v"></div>
+      <button class="icon-btn" id="btnFit" title="适应窗口 (F)"><svg><use href="#i-fit"/></svg></button>
+      <button class="icon-btn" id="btnHelp" title="帮助与快捷键 (?)"><svg><use href="#i-help"/></svg></button>
+      <button class="icon-btn" id="btnTheme" title="切换明暗主题"><svg><use href="#i-moon"/></svg></button>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolBar">
+    <div class="toolbar-title">
+      <div class="toolbar-ic"><svg><use href="#i-wand"/></svg></div>
+      <div class="toolbar-tt">
+        <b>编辑工具</b>
+        <span>选择工具后在画布上操作</span>
+      </div>
+    </div>
+    <span class="toolbar-divider"></span>
+    <div class="tool-groups">
+      <div class="tool-row">
+        <button class="tool-btn" data-tool="pan" title="平移视图 (H / 空格拖动)">
+          <svg><use href="#i-hand"/></svg><span>平移</span><kbd>H</kbd>
+        </button>
+        <button class="tool-btn active" data-tool="brush" title="画笔 (B)">
+          <svg><use href="#i-brush"/></svg><span>画笔</span><kbd>B</kbd>
+        </button>
+        <button class="tool-btn" data-tool="eraser" title="橡皮擦 (E)">
+          <svg><use href="#i-eraser"/></svg><span>橡皮</span><kbd>E</kbd>
+        </button>
+      </div>
+      <span class="toolbar-sep"></span>
+      <div class="tool-row">
+        <button class="tool-btn" data-tool="line" title="直线 / 墙线 (L)">
+          <svg><use href="#i-line"/></svg><span>直线</span><kbd>L</kbd>
+        </button>
+        <button class="tool-btn" data-tool="rect" title="矩形 (R)">
+          <svg><use href="#i-square"/></svg><span>矩形</span><kbd>R</kbd>
+        </button>
+        <button class="tool-btn" data-tool="polygon" title="多边形 / 禁行区 (P)">
+          <svg><use href="#i-polygon"/></svg><span>多边形</span><kbd>P</kbd>
+        </button>
+        <button class="tool-btn" data-tool="fill" title="油漆桶 (G)">
+          <svg><use href="#i-bucket"/></svg><span>填充</span><kbd>G</kbd>
+        </button>
+      </div>
+    </div>
+    <div class="toolbar-hint">
+      <span class="hint-dot"></span>
+      <span id="toolHint">打开地图后即可编辑</span>
+    </div>
+  </div>
+
+  <div id="main">
+    <!-- ==================== 左列：地图 ==================== -->
+    <aside class="panel panel-map" id="panelMap">
+      <header class="col-head">
+        <div class="col-ic"><svg><use href="#i-image"/></svg></div>
+        <div class="col-tt"><h2>地图</h2><p>信息 · 显示 · 统计</p></div>
+        <span class="col-tag">MAP</span>
+      </header>
+      <div class="col-body">
+
+        <section class="box box-info">
+          <div class="box-head">
+            <h3 class="box-title"><span class="box-mark"></span>地图信息</h3>
+          </div>
+          <div class="file-chip">
+            <svg><use href="#i-file"/></svg><span id="metaFile">—</span>
+          </div>
+          <div class="file-meta"><span id="metaSize">—</span><i></i><span id="metaFormat">—</span></div>
+          <div class="meta-tags" id="metaTags">—</div>
+          <div class="field-row">
+            <div class="field"><label for="inResolution">分辨率 (m/px)</label><input id="inResolution" type="number" min="0.0001" step="0.001" value="0.05" disabled></div>
+            <div class="field"><label for="inOriginYaw">偏航 (rad)</label><input id="inOriginYaw" type="number" step="0.01" value="0" disabled></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label for="inOriginX">原点 X (m)</label><input id="inOriginX" type="number" step="0.1" value="0" disabled></div>
+            <div class="field"><label for="inOriginY">原点 Y (m)</label><input id="inOriginY" type="number" step="0.1" value="0" disabled></div>
+          </div>
+          <div class="warn-box hidden" id="metaWarn">
+            <svg><use href="#i-warn"/></svg><span id="metaWarnText"></span>
+          </div>
+          <div class="box-note">原点 = 图像左下角；导出时按当前值生成 YAML</div>
+        </section>
+
+        <section class="box box-display">
+          <div class="box-head">
+            <h3 class="box-title"><span class="box-mark"></span>显示</h3>
+          </div>
+          <div class="seg" id="displaySeg">
+            <button data-display="trinary" class="active">三值视图</button>
+            <button data-display="gray">灰度原图</button>
+          </div>
+          <div class="check-row">
+            <label class="check"><input type="checkbox" id="chkDiff"> 高亮修改</label>
+            <label class="check"><input type="checkbox" id="chkMask" checked> 禁行区</label>
+          </div>
+          <div class="box-note">显示模式只影响预览，不修改 PGM</div>
+        </section>
+
+        <section class="box box-stats">
+          <div class="box-head">
+            <h3 class="box-title"><span class="box-mark"></span>统计</h3>
+            <span class="box-extra" id="statChanged">—</span>
+          </div>
+          <div class="stat-bars">
+            <span class="s-occ" id="barOcc" style="width:0"></span>
+            <span class="s-free" id="barFree" style="width:0"></span>
+            <span class="s-unk" id="barUnk" style="width:0"></span>
+            <span class="s-keep" id="barKeep" style="width:0"></span>
+          </div>
+          <div class="stat-grid">
+            <div class="stat"><div class="k"><i style="background:#2a3140"></i>障碍</div><div class="v" id="statOcc">—</div><div class="p" id="statOccP">—</div></div>
+            <div class="stat"><div class="k"><i style="background:#cfd6e2"></i>空闲</div><div class="v" id="statFree">—</div><div class="p" id="statFreeP">—</div></div>
+            <div class="stat"><div class="k"><i style="background:#8b93a7"></i>未知</div><div class="v" id="statUnk">—</div><div class="p" id="statUnkP">—</div></div>
+            <div class="stat"><div class="k"><i style="background:#f87171"></i>禁行区</div><div class="v" id="statKeep">—</div><div class="p" id="statKeepP">—</div></div>
+          </div>
+          <div class="legend-line">0 障碍 · 254 空闲 · 205 未知</div>
+        </section>
+
+      </div>
+    </aside>
+
+    <!-- ==================== 中间：画布 ==================== -->
+    <main class="stage" id="stage">
+      <canvas id="view"></canvas>
+
+      <div class="empty" id="emptyState">
+        <div class="empty-card">
+          <div class="empty-icon"><svg><use href="#i-image"/></svg></div>
+          <h1>打开一张 Nav2 地图开始精修</h1>
+          <p>支持 <code>.pgm</code>（P5 / P2）与配套 <code>.yaml</code>。<br>可以把两个文件一起拖到这里，或从开发板服务器目录中选择。</p>
+          <div class="empty-tip"><svg><use href="#i-warn"/></svg><span><b>必须同时打开 .pgm 与同名 .yaml</b>，否则原点和分辨率会丢失，地图会错位。</span></div>
+          <div class="empty-actions">
+            <button class="btn primary" id="emptyOpen"><svg><use href="#i-folder"/></svg>打开地图</button>
+            <button class="btn" id="emptyDemo"><svg><use href="#i-wand"/></svg>载入示例地图</button>
+          </div>
+          <div class="empty-foot">纯本地运行 · 不上传数据 · 固定导出 map.pgm + map.yaml</div>
+        </div>
+      </div>
+
+      <div class="zoom-hud">
+        <button id="zoomIn" title="放大">+</button>
+        <button id="zoomOut" title="缩小">−</button>
+        <button id="zoomFit" title="适应窗口"><svg style="width:14px;height:14px;margin:0 auto"><use href="#i-fit"/></svg></button>
+        <div class="zlabel" id="zoomLabel">—</div>
+      </div>
+
+      <div class="minimap-wrap hidden" id="miniWrap">
+        <canvas id="miniCanvas" width="200" height="120"></canvas>
+      </div>
+
+      <div class="drop-veil hidden" id="dropVeil"><div>松开鼠标以打开地图文件</div></div>
+
+      <div class="busy hidden" id="busy"><div class="busy-box"><span class="spinner"></span><span id="busyText">处理中…</span></div></div>
+    </main>
+
+    <!-- ==================== 右列：编辑 ==================== -->
+    <aside class="panel panel-edit" id="panelEdit">
+      <header class="col-head">
+        <div class="col-ic"><svg><use href="#i-brush"/></svg></div>
+        <div class="col-tt"><h2>编辑</h2><p>绘制 · 修复 · 禁行区</p></div>
+        <span class="col-tag">EDIT</span>
+      </header>
+      <div class="col-body">
+
+        <section class="box box-draw">
+          <div class="box-head">
+            <h3 class="box-title"><span class="box-mark"></span>绘制</h3>
+          </div>
+          <div class="mini-row">
+            <span class="mini-label">图层</span>
+            <div class="seg" id="layerSeg">
+              <button data-layer="map" class="active">地图</button>
+              <button data-layer="keepout">禁行区</button>
+            </div>
+          </div>
+          <div class="mini-row" id="valueRow">
+            <span class="mini-label" id="valueLabel">内容</span>
+            <div class="seg" id="valueSeg">
+              <button data-value="0" class="active"><i class="dot dot-occ"></i>障碍</button>
+              <button data-value="254"><i class="dot dot-free"></i>空闲</button>
+              <button data-value="205"><i class="dot dot-unk"></i>未知</button>
+            </div>
+          </div>
+          <div class="inline-hint hidden" id="keepoutHint">红色标注层，不修改 PGM</div>
+          <div class="field" data-tools="brush eraser">
+            <div class="slider-head"><label>笔刷大小</label><output id="brushSizeOut">12</output><span>px</span></div>
+            <input id="brushSize" type="range" min="1" max="120" value="12">
+          </div>
+          <div class="mini-row" data-tools="brush eraser">
+            <span class="mini-label">形状</span>
+            <div class="seg" id="shapeSeg">
+              <button data-shape="round" class="active">圆形</button>
+              <button data-shape="square">方形</button>
+            </div>
+          </div>
+          <div class="field" data-tools="line rect">
+            <div class="slider-head"><label>线宽</label><output id="lineWidthOut">3</output><span>px</span></div>
+            <input id="lineWidth" type="range" min="1" max="60" value="3">
+          </div>
+          <label class="check" data-tools="rect" title="取消勾选后只绘制矩形边框"><input type="checkbox" id="chkRectFill" checked> 矩形填充</label>
+          <div class="field" data-tools="fill">
+            <div class="slider-head"><label>填充容差</label><output id="toleranceOut">0</output></div>
+            <input id="tolerance" type="range" min="0" max="80" value="0">
+          </div>
+          <div class="box-note">画笔 / 形状设置只对画笔、橡皮生效</div>
+        </section>
+
+        <section class="box box-repair">
+          <div class="box-head">
+            <h3 class="box-title"><span class="box-mark"></span>批量修复</h3>
+            <span class="box-extra">地图层</span>
+          </div>
+          <div class="repair-row">
+            <div class="field"><label for="minBlob">最小斑块 (px)</label><input id="minBlob" type="number" min="2" max="200000" step="1" value="30"></div>
+            <button class="btn small" id="btnRemoveSmall" title="删除小于该像素数的孤立障碍块">移除小障碍</button>
+          </div>
+          <div class="field">
+            <label for="morphRadius">形态学半径 (px)</label>
+            <input id="morphRadius" type="number" min="1" max="40" step="1" value="2">
+          </div>
+          <div class="btn-row">
+            <button class="btn small" id="btnDilate" title="加粗障碍物">膨胀</button>
+            <button class="btn small" id="btnErode" title="变细障碍物">腐蚀</button>
+            <button class="btn small" id="btnClose" title="先膨胀再腐蚀，闭合墙体小缝隙">闭运算</button>
+          </div>
+          <div class="box-note">按 8 邻域连通块统计；批量操作可撤销</div>
+        </section>
+
+        <section class="box box-keepout">
+          <div class="box-head">
+            <h3 class="box-title"><span class="box-mark"></span>禁行区图层</h3>
+          </div>
+          <div class="mask-line"><span>禁行像素</span><b id="maskCount">0</b></div>
+          <div class="btn-row">
+            <button class="btn small" id="btnMaskToOcc" title="把禁行区烧录为障碍">写为障碍</button>
+            <button class="btn small" id="btnMaskToUnk" title="把禁行区烧录为未知">写为未知</button>
+          </div>
+          <div class="btn-row">
+            <button class="btn small" id="btnMaskExport" title="导出 map_keepout.pgm + map_keepout.yaml">导出掩膜</button>
+            <button class="btn small danger" id="btnMaskClear">清空</button>
+          </div>
+          <p class="mini-note">独立图层，不修改 PGM；导出为 Nav2 keepout 掩膜。</p>
+        </section>
+
+      </div>
+    </aside>
+  </div>
+
+  <footer class="statusbar">
+    <span class="st st-file" id="stFile">未打开地图</span>
+    <span class="st hidden" id="stDirty"><span class="dot-unsaved"></span>未保存</span>
+    <span class="st" id="stPos">像素 —</span>
+    <span class="st" id="stWorld">世界 —</span>
+    <span class="st grow"></span>
+    <span class="st" id="stZoom">—</span>
+    <span class="st" id="stSize">—</span>
+    <span class="st" id="stRes">—</span>
+  </footer>
+</div>
+
+<input type="file" id="fileInput" accept=".pgm,.yaml,.yml" multiple hidden>
+
+<dialog id="openDlg">
+  <div class="dlg-head">
+    <h2>打开地图</h2>
+    <button class="icon-btn" data-close="openDlg" title="关闭"><svg><use href="#i-x"/></svg></button>
+  </div>
+  <div class="dlg-body">
+    <div class="tabs" id="openTabs">
+      <button data-tab="local" class="active">本地文件</button>
+      <button data-tab="server" id="tabServer" class="hidden">开发板目录</button>
+    </div>
+    <div id="openLocalPane">
+      <div class="pair-alert">
+        <svg><use href="#i-warn"/></svg>
+        <div><b>必须同时选择 .pgm 和同名 .yaml</b><span>只选 PGM 会丢失原点和分辨率，地图在 Nav2 中会错位。</span></div>
+      </div>
+      <button class="btn wide" id="btnPickLocal"><svg><use href="#i-folder"/></svg>选择 .pgm + .yaml 文件…</button>
+      <p class="note">推荐把 <code>map.pgm</code> 和 <code>map.yaml</code> 一起选中；也可以直接把两个文件拖进窗口。若只选 PGM，编辑器会再次询问是否使用默认原点。</p>
+    </div>
+    <div id="openServerPane" class="hidden">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div class="note" style="margin:0;flex:1;overflow:hidden;text-overflow:ellipsis" id="serverDir">—</div>
+        <button class="btn small" id="btnServerRefresh"><svg><use href="#i-refresh"/></svg>刷新</button>
+      </div>
+      <div class="file-list" id="serverFileList"></div>
+    </div>
+  </div>
+  <div class="dlg-foot">
+    <button class="btn" data-close="openDlg">取消</button>
+  </div>
+</dialog>
+
+<dialog id="saveDlg">
+  <div class="dlg-head">
+    <h2>导出地图</h2>
+    <button class="icon-btn" data-close="saveDlg" title="关闭"><svg><use href="#i-x"/></svg></button>
+  </div>
+  <div class="dlg-body">
+    <div class="fixed-files">
+      <div class="fixed-file"><svg><use href="#i-file"/></svg><div><b>map.pgm</b><span>栅格地图</span></div></div>
+      <div class="fixed-file"><svg><use href="#i-file"/></svg><div><b>map.yaml</b><span>分辨率 / 原点</span></div></div>
+    </div>
+    <p class="note" style="margin:10px 0 12px">文件名固定为 <code>map.pgm</code> / <code>map.yaml</code>；禁行区掩膜为 <code>map_keepout.pgm</code> / <code>map_keepout.yaml</code>。</p>
+    <label class="check"><input type="checkbox" id="chkSaveMask"> 同时导出禁行区掩膜</label>
+    <div class="radio-row" id="saveTargetRow" style="margin-top:12px">
+      <label class="radio-card">
+        <input type="radio" name="saveTarget" value="local" checked>
+        <div><b>下载到本机</b><span>map.pgm + map.yaml → 浏览器下载目录</span></div>
+      </label>
+      <label class="radio-card hidden" id="saveTargetServer">
+        <input type="radio" name="saveTarget" value="server">
+        <div><b>写入服务器目录</b><span id="saveServerDirHint">—</span></div>
+      </label>
+    </div>
+    <p class="note" id="saveNote">服务器模式会自动保留时间戳备份；本机模式如提示多个下载，请选择允许。</p>
+  </div>
+  <div class="dlg-foot">
+    <button class="btn" data-close="saveDlg">取消</button>
+    <button class="btn primary" id="btnSaveConfirm"><svg><use href="#i-download"/></svg>导出</button>
+  </div>
+</dialog>
+
+<dialog id="pairDlg">
+  <div class="dlg-head">
+    <h2>缺少配对的 YAML</h2>
+    <button class="icon-btn" data-close="pairDlg" title="关闭"><svg><use href="#i-x"/></svg></button>
+  </div>
+  <div class="dlg-body">
+    <div class="pair-hero">
+      <div class="pair-icon"><svg><use href="#i-warn"/></svg></div>
+      <div>
+        <b>只加载了 <span id="pairFileName">map.pgm</span></b>
+        <p>没有同名的 <code>.yaml</code>，编辑器无法知道地图的<b>分辨率和原点</b>，将回退到默认值（0.05 m/px、原点 0,0）。地图在 RViz / Nav2 中会错位。</p>
+      </div>
+    </div>
+    <div class="pair-how">
+      <b>正确做法</b>
+      <span>同时选择 <code>map.pgm</code> 与同目录的 <code>map.yaml</code>；也可以把两个文件一起拖进窗口。</span>
+    </div>
+  </div>
+  <div class="dlg-foot">
+    <button class="btn" id="pairContinue">仍然打开（默认值）</button>
+    <button class="btn primary" id="pairRetry">重新选择文件</button>
+  </div>
+</dialog>
+
+<dialog id="helpDlg">
+  <div class="dlg-head">
+    <h2>帮助与快捷键</h2>
+    <button class="icon-btn" data-close="helpDlg" title="关闭"><svg><use href="#i-x"/></svg></button>
+  </div>
+  <div class="dlg-body help">
+    <h4>打开与导出</h4>
+    <div class="callout">打开地图时<b>必须同时选择 .pgm 与同名 .yaml</b>；只选 PGM 会丢失原点和分辨率。导出的文件名固定为 <code>map.pgm</code> 与 <code>map.yaml</code>。</div>
+    <h4>基本操作</h4>
+    <div class="keys">
+      <kbd>滚轮</kbd><span>以鼠标位置为中心缩放</span>
+      <kbd>空格 + 拖动</kbd><span>平移视图（任何工具下均可）</span>
+      <kbd>中键拖动</kbd><span>平移视图</span>
+      <kbd>右键拖动</kbd><span>用橡皮擦/清除禁行区</span>
+      <kbd>右键</kbd><span>多边形：删除上一个顶点</span>
+      <kbd>F</kbd><span>适应窗口</span>
+      <kbd>[ / ]</kbd><span>减小 / 增大笔刷</span>
+      <kbd>1 / 2 / 3</kbd><span>选择障碍 / 空闲 / 未知</span>
+    </div>
+    <h4>工具</h4>
+    <div class="keys">
+      <kbd>H</kbd><span>平移</span>
+      <kbd>B</kbd><span>画笔：涂抹障碍、墙体、空白</span>
+      <kbd>E</kbd><span>橡皮擦：把像素恢复为空闲</span>
+      <kbd>L</kbd><span>直线：拖出一条墙线</span>
+      <kbd>R</kbd><span>矩形：填充或描边</span>
+      <kbd>P</kbd><span>多边形：逐点单击，双击 / Enter / 点回起点闭合</span>
+      <kbd>G</kbd><span>油漆桶：按颜色连通区域填充</span>
+    </div>
+    <h4>图层</h4>
+    <p>“地图”层直接修改 PGM 像素；“禁行区”是独立标注层，显示为红色，导出时可生成 Nav2 filter mask，也可“写为障碍/未知”烧录进地图。</p>
+    <h4>关于 PGM 数值</h4>
+    <p>标准 Nav2 地图中：<code>0</code> = 障碍，<code>254</code> = 空闲，<code>205</code> = 未知。编辑器导出时保持 8 位 P5 格式，并按当前分辨率、原点、阈值重新生成 YAML。</p>
+    <h4>关于禁行区与 keepout_filter</h4>
+    <div class="callout">导出的掩膜是标准 trinary 地图：禁行处为黑色（occupied），其余为白色（free）。把它交给 Nav2 的 <code>filter_mask_server</code>，并在 costmap 中启用 <code>KeepoutFilter</code> 即可。具体参数名请以你使用的 Nav2 版本为准。</div>
+    <h4>提示</h4>
+    <p>如果只用画笔清理零散噪点，先试“移除小障碍”（阈值 20–60 px）；如果墙体有细小断口，用半径 1–3 的“闭运算”。批量修复同样可以撤销。</p>
+  </div>
+  <div class="dlg-foot">
+    <button class="btn primary" data-close="helpDlg">知道了</button>
+  </div>
+</dialog>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+<!-- INLINE_JS -->
+</script>
+</body>
+</html>

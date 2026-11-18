@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local test / browser artifacts
+.ffprofile/
+.shots/
+.downloads/
+
+# Map server backups (when serving a directory in this repo)
+.mapedit_backup/
